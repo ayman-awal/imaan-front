@@ -1,0 +1,60 @@
+@use 'loader';
+@use 'postcard';
+
+body{
+    padding: 0px;
+    margin: 0px;
+    background-color: #f9f9f9;
+    color: #333; 
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.no-posts {
+    text-align: center;
+    margin-top: 50px;
+    color: #555;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.modal-style {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    min-height: 300px;
+    max-height: 500px;
+    background-color: #fff;
+    border: 2px solid #000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    &:focus {
+        outline: none;
+      }
+  }
+  
+  
+
+.fake-textbox {
+    display: inline-block;
+    width: 100%;
+    height: 60px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    cursor: text;
+    user-select: text;
+    margin: 30px 0;
+  }
+  
