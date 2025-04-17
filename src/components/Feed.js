@@ -7,9 +7,11 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import SkeletonPostCard from "./SkeletonPostCard";
+import SnackbarComponent from "./SnackbarComponent";
 
 const Feed = () => {
   const router = useRouter();
+  const token = typeof window !== "undefined" ? localStorage.getItem("imaanToken") : null;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -20,17 +22,28 @@ const Feed = () => {
     message: "",
     severity: "success",
   });
-  const handleOpen = () => setOpen(true);
+
+  const handleOpen = () => {
+    if (!token) {
+      setSnackbar({
+        open: true,
+        message: "Please login to ask a question.",
+        severity: "error",
+      });
+      return;
+    }
+    else{
+      setOpen(true);
+    }
+  }
+
   const handleClose = () => setOpen(false);
 
-
   useEffect(() => {
-
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/posts/feed`
-        );
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts/feed`);
 
         setPosts(response.data.posts);
       } catch (error) {
@@ -76,7 +89,7 @@ const Feed = () => {
 
   return (
     <div className="container">
-      <div className="fake-textbox" onClick={handleOpen}>
+      <div className="textbox" onClick={handleOpen}>
         <p style={{ fontSize: "18px" }}>Write your question...</p>
       </div>
       {loading ? (
@@ -149,12 +162,12 @@ const Feed = () => {
           </Box>
         </Box>
       </Modal>
-      {/* <SnackbarComponent
+      <SnackbarComponent
         message={snackbar.message}
         severity={snackbar.severity}
         open={snackbar.open}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
-      /> */}
+      />
     </div>
   );
 };
