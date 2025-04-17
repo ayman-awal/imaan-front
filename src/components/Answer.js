@@ -71,7 +71,7 @@ const Answer = ({ postId }) => {
 
 
   return (
-    <Container maxWidth="md" sx={{ py: 10 }}>
+    <Container maxWidth="md" sx={{ py: 5 }}>
       <IconButton onClick={handleBack} sx={{ mb: 2 }}>
         <ArrowBackIcon />
       </IconButton>
@@ -148,7 +148,7 @@ const Answer = ({ postId }) => {
               lineHeight: 1.7,
               color: "#1e4620",
               whiteSpace: "pre-line",
-              fontFamily: "system-ui",
+              // fontFamily: "system-ui",
             }}
           >
             {post.answer || "No answer yet."}
