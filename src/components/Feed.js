@@ -8,10 +8,12 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import SkeletonPostCard from "./SkeletonPostCard";
 import SnackbarComponent from "./SnackbarComponent";
+import PostSkeleton from "./Skeleton/PostSkeleton";
 
 const Feed = () => {
   const router = useRouter();
-  const token = typeof window !== "undefined" ? localStorage.getItem("imaanToken") : null;
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("imaanToken") : null;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -31,19 +33,19 @@ const Feed = () => {
         severity: "error",
       });
       return;
-    }
-    else{
+    } else {
       setOpen(true);
     }
-  }
+  };
 
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts/feed`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/posts/feed`
+        );
 
         setPosts(response.data.posts);
       } catch (error) {
@@ -92,11 +94,12 @@ const Feed = () => {
       <div className="textbox" onClick={handleOpen}>
         <p style={{ fontSize: "18px" }}>Write your question...</p>
       </div>
+      {/* <PostSkeleton /> */}
       {loading ? (
-        <div className="skeleton-wrapper">
-            {[...Array(5)].map((_, i) => (
-                <SkeletonPostCard key={i} />
-            ))}
+        <div>
+          {[...Array(5)].map((_, i) => (
+            <PostSkeleton key={i} />
+          ))}
         </div>
       ) : posts.length === 0 ? (
         <div className="no-posts">No posts available</div>
@@ -154,7 +157,8 @@ const Feed = () => {
                 ? 0
                 : question.trim().split(/\s+/).length <= 150
                 ? question.trim().split(/\s+/).length
-                : 150}/150 words
+                : 150}
+              /150 words
             </span>
             <Button variant="contained" onClick={createPost}>
               Post
