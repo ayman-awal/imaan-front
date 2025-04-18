@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,13 +9,14 @@ import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import PersonAdd from "@mui/icons-material/PersonAdd";
+// import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 export default function MenuAppBar() {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [auth, setAuth] = useState(true);
 
@@ -25,6 +27,10 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleProfileRedirect = () => {
+    router.push("/profile");
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -100,7 +106,7 @@ export default function MenuAppBar() {
                         right: 14,
                         width: 10,
                         height: 10,
-                        // bgcolor: "background.paper",
+                        bgcolor: "background.paper",
                         transform: "translateY(-50%) rotate(45deg)",
                         zIndex: 0,
                       },
@@ -110,19 +116,10 @@ export default function MenuAppBar() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={handleClose}>
-                  <Avatar /> Profile
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Avatar /> My account
+                <MenuItem onClick={handleProfileRedirect}>
+                  <Avatar /> My Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <PersonAdd fontSize="small" />
-                  </ListItemIcon>
-                  Add another account
-                </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
                     <Settings fontSize="small" />

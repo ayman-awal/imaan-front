@@ -1,5 +1,6 @@
 @use 'loader';
 @use 'postcard';
+@use 'profile';
 
 body{
     padding: 0px;
@@ -7,6 +8,10 @@ body{
     background-color: #f9f9f9;
     color: #333; 
     font-family: 'Arial', sans-serif;
+}
+
+html {
+  scrollbar-gutter: stable;
 }
 
 .container {
