@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,13 +15,20 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LoginModal from "./Modals/LoginModal";
+import { jwtDecode } from 'jwt-decode';
 
 export default function MenuAppBar() {
   const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nameInitial, setNameInitial] = useState("")
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
+
+  const closeModal = () => setOpenModal(false);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -29,9 +36,41 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("imaanToken");
+    setIsLoggedIn(false);
+    setAnchorEl(null);
+    localStorage.removeItem("isAdmin");
+  }
+
   const handleProfileRedirect = () => {
     router.push("/profile");
   };
+  
+  useEffect(() => {
+    const token = localStorage.getItem("imaanToken");
+
+    if (token){
+      try {
+        const decoded = jwtDecode(token);
+        const isTokenExpired = decoded.exp * 1000 < Date.now();
+  
+        if (!isTokenExpired) {
+          setIsLoggedIn(true);
+          const name = decoded?.name
+          setNameInitial(name.charAt(0).toUpperCase());
+          localStorage.setItem("isAdmin", decoded.userType === "admin" ? "true" : "false");
+        } else {
+          setIsLoggedIn(false);
+          localStorage.removeItem("imaanToken");
+          localStorage.removeItem("isAdmin");
+        }
+      } catch (err) {
+        console.error("Invalid token:", err);
+        setIsLoggedIn(false);
+      }
+    }
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -65,12 +104,17 @@ export default function MenuAppBar() {
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
                     >
-                      <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                      <Avatar sx={{ width: 32, height: 32 }}>{nameInitial}</Avatar>
                     </IconButton>
                   </Tooltip>
                 </Box>
               ) : (
-                <Button variant="outlined" startIcon={<AccountCircleIcon />} sx={{ color: "white", borderColor: "white" }}>
+                <Button
+                  variant="outlined"
+                  startIcon={<AccountCircleIcon />}
+                  sx={{ color: "white", borderColor: "white" }}
+                  onClick={() => setOpenModal(true)}
+                >
                   Login
                 </Button>
               )}
@@ -121,7 +165,7 @@ export default function MenuAppBar() {
                   </ListItemIcon>
                   Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
@@ -132,6 +176,7 @@ export default function MenuAppBar() {
           }
         </Toolbar>
       </AppBar>
+      <LoginModal openModal={openModal} closeModal={closeModal} setIsLoggedIn={setIsLoggedIn} />
     </Box>
   );
 }

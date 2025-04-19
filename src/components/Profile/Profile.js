@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useRouter } from "next/router";
 import GutterlessList from "./GutterlessList";
 import { IconButton, Typography } from "@mui/material";
@@ -8,25 +9,42 @@ import QuestionsPanel from "./QuestionsPanel";
 function Profile() {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("My Questions");
-  const [answeredQuestions, setAnsweredQuestions] = useState([
-    {title: "A1", question: "A1", onClick: null},
-    {title: "A2", question: "A2", onClick: null},
-    {title: "A3", question: "A3", onClick: null},
-    {title: "A4", question: "A4", onClick: null},
-    {title: "A5", question: "A5", onClick: null},
-    {title: "A6", question: "A6", onClick: null}
-  ]);
-
-  const [unAnsweredQuestions, setUnAnsweredQuestions] = useState([
-    {title: "uA1", question: "uA1", onClick: null},
-    {title: "uA2", question: "uA2", onClick: null},
-    {title: "uA3", question: "uA3", onClick: null},
-    {title: "uA4", question: "uA4", onClick: null},
-  ]);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const [unansweredQuestions, setUnansweredQuestions] = useState([]);
 
   const handleBack = () => {
     router.back();
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("imaanToken");
+
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status == 200) {
+          console.log(response.data);
+          setAnsweredQuestions(response.data.posts.answered);
+          setUnansweredQuestions(response.data.posts.unanswered);
+          // setName(response.data.user.name);
+          // setEmail(response.data.user.email);
+          // setCreated(response.data.user.accountCreated);
+          console.log(posts);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   return (
     <div className="profile-container">
@@ -45,7 +63,7 @@ function Profile() {
           {selectedTab === "My Questions" && (
             <QuestionsPanel
               answeredQuestions={answeredQuestions}
-              unAnsweredQuestions={unAnsweredQuestions}
+              unansweredQuestions={unansweredQuestions}
             />
           )}
 

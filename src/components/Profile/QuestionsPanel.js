@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
-function QuestionsPanel({ answeredQuestions, unAnsweredQuestions }) {
+function QuestionsPanel({ answeredQuestions, unansweredQuestions }) {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -19,7 +19,7 @@ function QuestionsPanel({ answeredQuestions, unAnsweredQuestions }) {
           bgcolor: "#fff",
           borderRadius: "10px",
           py: 1,
-          marginBottom: "10px",
+          marginBottom: "15px",
         }}
       >
         <Tabs value={value} onChange={handleChange} centered>
@@ -35,7 +35,7 @@ function QuestionsPanel({ answeredQuestions, unAnsweredQuestions }) {
               onClick={q.onClick}
             />
           ))
-        : unAnsweredQuestions.map((q, i) => (
+        : unansweredQuestions.map((q, i) => (
             <PostCard
               title={q.title}
               question={q.question}
