@@ -9,16 +9,17 @@ import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
-// import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import Button from "@mui/material/Button";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function MenuAppBar() {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [auth, setAuth] = useState(true);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -30,22 +31,10 @@ export default function MenuAppBar() {
 
   const handleProfileRedirect = () => {
     router.push("/profile");
-  }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup> */}
       <AppBar
         position="static"
         sx={{
@@ -57,28 +46,34 @@ export default function MenuAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             [Imaan Academy Logo]
           </Typography>
-          {auth && (
+          {
             <div>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <Tooltip title="Account settings">
-                  <IconButton
-                    onClick={handleClick}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={open ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                  >
-                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-                  </IconButton>
-                </Tooltip>
-              </Box>
+              {isLoggedIn ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Tooltip title="Account settings">
+                    <IconButton
+                      onClick={handleClick}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={open ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                    >
+                      <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              ) : (
+                <Button variant="outlined" startIcon={<AccountCircleIcon />} sx={{ color: "white", borderColor: "white" }}>
+                  Login
+                </Button>
+              )}
               <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
@@ -134,7 +129,7 @@ export default function MenuAppBar() {
                 </MenuItem>
               </Menu>
             </div>
-          )}
+          }
         </Toolbar>
       </AppBar>
     </Box>
