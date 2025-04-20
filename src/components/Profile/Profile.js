@@ -9,6 +9,7 @@ import QuestionsPanel from "./QuestionsPanel";
 function Profile() {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("My Questions");
+  const [loading, setLoading] = useState(true);
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [unansweredQuestions, setUnansweredQuestions] = useState([]);
 
@@ -34,13 +35,11 @@ function Profile() {
           console.log(response.data);
           setAnsweredQuestions(response.data.posts.answered);
           setUnansweredQuestions(response.data.posts.unanswered);
-          // setName(response.data.user.name);
-          // setEmail(response.data.user.email);
-          // setCreated(response.data.user.accountCreated);
-          console.log(posts);
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchProfile();
@@ -62,6 +61,7 @@ function Profile() {
         <div style={{ flex: 7 }}>
           {selectedTab === "My Questions" && (
             <QuestionsPanel
+              loading={loading}
               answeredQuestions={answeredQuestions}
               unansweredQuestions={unansweredQuestions}
             />

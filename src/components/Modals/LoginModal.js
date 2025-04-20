@@ -5,9 +5,10 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { jwtDecode } from 'jwt-decode';
+import { useAuth } from "@/context/AuthContext";
 
-function LoginModal({ openModal, closeModal, setIsLoggedIn }) {
+function LoginModal({ openModal, closeModal }) {
+  const { login, logout } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,18 +27,10 @@ function LoginModal({ openModal, closeModal, setIsLoggedIn }) {
       const token = response.data.token;
 
       if (token) {
-        const decoded = jwtDecode(token);
-        localStorage.setItem("imaanToken", token);
-        setIsLoggedIn(true);
-
-        if (decoded.userType === "admin") {
-          localStorage.setItem("isAdmin", "true");
-        } else {
-          localStorage.setItem("isAdmin", "false");
-        }
+        login(token);
         closeModal();
       } else {
-        setIsLoggedIn(false);
+        logout();
       }
     } catch (error) {
       console.error(error);
@@ -59,7 +52,9 @@ function LoginModal({ openModal, closeModal, setIsLoggedIn }) {
         >
           <TextField
             label="Email"
-            onChange={(e) => {setEmail(e.target.value)}}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             variant="outlined"
             type="email"
             required
@@ -67,7 +62,9 @@ function LoginModal({ openModal, closeModal, setIsLoggedIn }) {
           />
           <TextField
             label="Password"
-            onChange={(e) => {setPassword(e.target.value)}}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             variant="outlined"
             type="password"
             required

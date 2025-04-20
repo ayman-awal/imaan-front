@@ -1,6 +1,6 @@
 import React from "react";
 import Feed from "@/components/Feed";
-import Appbar from "@/components/Appbar";
+import Appbar from "@/components/MenuAppbar";
 ``
 const HomePage = () => {
   return (
