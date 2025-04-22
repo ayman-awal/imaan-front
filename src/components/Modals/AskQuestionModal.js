@@ -44,6 +44,7 @@ function AskQuestionModal({ open, handleClose, setSnackbar, token }) {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      disableScrollLock={true}
     >
       <Box className="modal-style">
         <Box

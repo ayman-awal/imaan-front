@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import GutterlessList from "./GutterlessList";
+import GutterlessList from "../common/GutterlessList";
 import { IconButton, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import QuestionsPanel from "./QuestionsPanel";
@@ -55,6 +55,7 @@ function Profile() {
           <GutterlessList
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
+            tabs={["My Questions", "Saved", "Account Settings"]}
           />
         </div>
 

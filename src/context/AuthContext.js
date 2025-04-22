@@ -49,8 +49,10 @@ export const AuthProvider = ({ children }) => {
     router.push("/");
   };
 
+  const isAdmin = user?.userType === "admin";
+
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn: !!user, login, logout, nameInitial }}>
+    <AuthContext.Provider value={{ user, isLoggedIn: !!user, login, logout, nameInitial, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

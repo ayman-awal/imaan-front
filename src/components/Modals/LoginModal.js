@@ -42,6 +42,7 @@ function LoginModal({ openModal, closeModal }) {
       onClose={closeModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      disableScrollLock={true}
     >
       <Box className="modal-style">
         <Box

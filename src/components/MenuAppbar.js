@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
   AppBar,
@@ -14,13 +14,19 @@ import {
   Button,
   ListItemIcon,
 } from "@mui/material";
-import { AccountCircle as AccountCircleIcon, Logout, Settings } from "@mui/icons-material";
-import LoginModal from "./Modals/LoginModal";
+import {
+  AccountCircle as AccountCircleIcon,
+  Logout,
+  Settings,
+  Computer
+} from "@mui/icons-material";
+
+import LoginModal from "./modals/LoginModal";
 import { useAuth } from "@/context/AuthContext";
 
 export default function MenuAppBar() {
   const router = useRouter();
-  const { isLoggedIn, logout, nameInitial } = useAuth();
+  const { isLoggedIn, logout, nameInitial, isAdmin } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -29,14 +35,10 @@ export default function MenuAppBar() {
   const closeModal = () => setOpenModal(false);
   const handleClose = () => setAnchorEl(null);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-  
+
   const handleLogout = () => {
     logout();
     handleClose();
-  };
-
-  const handleProfileRedirect = () => {
-    router.push("/profile");
   };
 
   return (
@@ -44,7 +46,7 @@ export default function MenuAppBar() {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#555",
+          backgroundColor: "var(--primary-color)",
           color: "#fff",
         }}
       >
@@ -62,6 +64,16 @@ export default function MenuAppBar() {
                     textAlign: "center",
                   }}
                 >
+                  {isAdmin ? (
+                    <Button
+                      variant="outlined"
+                      startIcon={<Computer />}
+                      sx={{ color: "white", borderColor: "white" }}
+                      onClick={() => router.push("/dashboard")}
+                    >
+                      Dashboard
+                    </Button>
+                  ) : null}
                   <Tooltip title="Account settings">
                     <IconButton
                       onClick={handleClick}
@@ -125,31 +137,32 @@ export default function MenuAppBar() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={handleProfileRedirect}>
+                <MenuItem onClick={() => router.push("/profile")}>
                   <Avatar /> My Profile
                 </MenuItem>
+
                 <Divider />
+
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
                   Settings
                 </MenuItem>
+
                 <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
                   Logout
                 </MenuItem>
+
               </Menu>
             </div>
           }
         </Toolbar>
       </AppBar>
-      <LoginModal
-        openModal={openModal}
-        closeModal={closeModal}
-      />
+      <LoginModal openModal={openModal} closeModal={closeModal} />
     </Box>
   );
 }

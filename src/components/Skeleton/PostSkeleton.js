@@ -6,7 +6,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 function PostSkeleton() {
   return (
-    <Card sx={{ elevation: "0", maxWidth: "100%", borderRadius: "10px", marginBottom: "10px" }}>
+    <Card sx={{ elevation: "0", maxWidth: "100%", borderRadius: "10px", marginBottom: "25px" }}>
       <CardHeader
         title={
           <Skeleton

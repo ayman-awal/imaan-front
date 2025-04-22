@@ -1,13 +1,13 @@
 import React from "react";
-import Profile from "@/components/profile/Profile";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
+import Dashboard from "@/components/dashboard/Dashboard";
 
-function ProfilePage() {
+function DashboardPage() {
   return (
     <ProtectedRoute>
-      <Profile />
+      <Dashboard />
     </ProtectedRoute>
   );
 }
 
-export default ProfilePage;
+export default DashboardPage;

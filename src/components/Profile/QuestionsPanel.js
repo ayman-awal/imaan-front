@@ -1,39 +1,20 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import PostCard from "../PostCard";
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import PostSkeleton from "../Skeleton/PostSkeleton";
+import TabNavigation from "../common/TabNavigation";
+import PostSkeleton from "../skeleton/PostSkeleton";
 
 function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
   const router = useRouter();
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const redirectAnswer = (postId) => {
-    router.push(`/answers/${postId}`);
-  }
-
   return (
     <div>
-      <Box
-        sx={{
-          width: "100%",
-          bgcolor: "#fff",
-          borderRadius: "10px",
-          py: 1,
-          marginBottom: "15px",
-        }}
-      >
-        <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Answered questions" />
-          <Tab label="Unanswered questions" />
-        </Tabs>
-      </Box>
+      <TabNavigation
+        value={value}
+        setValue={setValue}
+        labels={["Answered questions", "Unanswered questions"]}
+      />
 
       {loading ? (
         <div>
@@ -48,7 +29,7 @@ function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
               key={i}
               title={q.title}
               question={q.question}
-              onClick={() => redirectAnswer(q.id)}
+              onClick={() => router.push(`/answers/${q.id}`)}
             />
           ))
         ) : (

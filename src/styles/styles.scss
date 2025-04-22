@@ -1,6 +1,12 @@
 @use 'postcard';
 @use 'profile';
 
+$primary-color: #002D56;
+
+:root {
+  --primary-color: #{$primary-color};
+}
+
 body{
     padding: 0px;
     margin: 0px;

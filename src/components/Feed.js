@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import axios from "axios";
 import { useRouter } from "next/router";
-import SnackbarComponent from "./SnackbarComponent";
-import PostSkeleton from "./Skeleton/PostSkeleton";
-import AskQuestionModal from "./Modals/AskQuestionModal";
+import SnackbarComponent from "./common/SnackbarComponent";
+import PostSkeleton from "./skeleton/PostSkeleton";
+import AskQuestionModal from "./modals/AskQuestionModal";
 
 const Feed = () => {
   const router = useRouter();
