@@ -42,7 +42,7 @@ function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
               key={i}
               title={q.title}
               question={q.question}
-              onClick={q.onClick}
+              onClick={null}
             />
           ))
         ) : (

@@ -1,9 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 import GutterlessList from "../common/GutterlessList";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton, Typography } from "@mui/material";
+import QuestionReviewPanel from "./QuestionReviewPanel";
 
 function Dashboard() {
-  const [selectedTab, setSelectedTab] = useState("Questions");
+  const router = useRouter();
+  const [pendingQuestions, setPendingQuestions] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("Pending questions");
+
+  const handleBack = () => {
+    router.back();
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("imaanToken");
+
+    const fetchUnpublishedQuestions = async () => {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/posts/unpublished`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.status == 200) {
+        setPendingQuestions(res.data.posts);
+      }
+    };
+    fetchUnpublishedQuestions();
+  }, []);
 
   return (
     <div className="profile-container">
@@ -15,10 +45,22 @@ function Dashboard() {
           <GutterlessList
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
-            tabs={["Questions", "Articles", "Users"]}
+            tabs={["Pending questions", "Articles", "List of users"]}
           />
         </div>
+        <div style={{ flex: 7 }}>
+          {selectedTab === "Pending questions" && (
+            <QuestionReviewPanel pendingQuestions={pendingQuestions} />
+          )}
 
+          {selectedTab === "Articles" && (
+            <Typography variant="h6">Articles</Typography>
+          )}
+
+          {selectedTab === "List of users" && (
+            <Typography variant="h6">Users</Typography>
+          )}
+        </div>
       </div>
     </div>
   );
