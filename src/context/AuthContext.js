@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("imaanToken");
     setUser(null);
-    localStorage.removeItem("imaanToken");
     localStorage.removeItem("isAdmin");
     setNameInitial("");
     router.push("/");

@@ -4,16 +4,12 @@ import axios from "axios";
 import GutterlessList from "../common/GutterlessList";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton, Typography } from "@mui/material";
-import QuestionReviewPanel from "./QuestionReviewPanel";
+import PendingQuestionsPanel from "./PendingQuestionsPanel";
 
 function Dashboard() {
   const router = useRouter();
   const [pendingQuestions, setPendingQuestions] = useState([]);
   const [selectedTab, setSelectedTab] = useState("Pending questions");
-
-  const handleBack = () => {
-    router.back();
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("imaanToken");
@@ -37,7 +33,7 @@ function Dashboard() {
 
   return (
     <div className="profile-container">
-      <IconButton onClick={handleBack} sx={{ mb: 2 }}>
+      <IconButton onClick={() => router.back()} sx={{ mb: 2 }}>
         <ArrowBackIcon />
       </IconButton>
       <div style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
@@ -50,7 +46,7 @@ function Dashboard() {
         </div>
         <div style={{ flex: 7 }}>
           {selectedTab === "Pending questions" && (
-            <QuestionReviewPanel pendingQuestions={pendingQuestions} />
+            <PendingQuestionsPanel pendingQuestions={pendingQuestions} />
           )}
 
           {selectedTab === "Articles" && (
