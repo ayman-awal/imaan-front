@@ -10,7 +10,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const Answer = ({ postId }) => {
@@ -69,12 +69,26 @@ const Answer = ({ postId }) => {
     router.back();
   };
 
-
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
-      <IconButton onClick={handleBack} sx={{ mb: 2 }}>
-        <ArrowBackIcon />
-      </IconButton>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <IconButton onClick={handleBack} sx={{ marginRight: 2 }}>
+          <ArrowBackIcon />
+        </IconButton>
+
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: 700,
+            color: "#1a1a1a",
+            lineHeight: 1.4,
+          }}
+        >
+          {post.title}
+        </Typography>
+      </Box>
+
       <Box
         sx={{
           background: "rgba(255,255,255,0.8)",
@@ -82,27 +96,19 @@ const Answer = ({ postId }) => {
           boxShadow: "0 12px 30px rgba(0,0,0,0.05)",
           borderRadius: "20px",
           px: { xs: 4, md: 6 },
-          py: { xs: 5, md: 7 },
+          py: { xs: 5, md: 5 },
           backdropFilter: "blur(8px)",
         }}
       >
-        <Typography
-          variant="h4"
-          component="h1"
-          sx={{
-            fontWeight: 700,
-            mb: 4,
-            lineHeight: 1.4,
-            color: "#1a1a1a",
-          }}
-        >
-          {post.title}
-        </Typography>
-
         <Box sx={{ mb: 5 }}>
           <Typography
             variant="subtitle2"
-            sx={{ mb: 1, color: "#666", textTransform: "uppercase", fontSize: "0.85rem" }}
+            sx={{
+              mb: 1,
+              color: "#666",
+              textTransform: "uppercase",
+              fontSize: "0.85rem",
+            }}
           >
             Question
           </Typography>
@@ -114,6 +120,7 @@ const Answer = ({ postId }) => {
               px: 3,
               py: 2.5,
               fontSize: "1.05rem",
+              lineHeight: "1.7",
               fontWeight: 500,
               color: "#333",
             }}
@@ -123,10 +130,21 @@ const Answer = ({ postId }) => {
         </Box>
 
         <Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <Typography
               variant="subtitle2"
-              sx={{ mb: 1, color: "#666", textTransform: "uppercase", fontSize: "0.85rem" }}
+              sx={{
+                mb: 1,
+                color: "#666",
+                textTransform: "uppercase",
+                fontSize: "0.85rem",
+              }}
             >
               Answer
             </Typography>
@@ -148,7 +166,6 @@ const Answer = ({ postId }) => {
               lineHeight: 1.7,
               color: "#1e4620",
               whiteSpace: "pre-line",
-              // fontFamily: "system-ui",
             }}
           >
             {post.answer || "No answer yet."}
