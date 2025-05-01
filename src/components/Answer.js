@@ -15,25 +15,39 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-// import IosShareIcon from "@mui/icons-material/IosShare";
+import { useAuth } from "@/context/AuthContext";
 
 const Answer = ({ postId }) => {
+  const { isLoggedIn } = useAuth();
   const router = useRouter();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [saved, setSaved] = useState(true);
+  const [saved, setSaved] = useState();
   const [error, setError] = useState(null);
+
+  const checkBookmark = async (postId, token) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts/check-bookmark/${postId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    return res.data?.isBookmarked;
+  };
 
   useEffect(() => {
     if (!postId) return;
-
+    const token = localStorage.getItem("imaanToken");
     const fetchPost = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/posts/${postId}`
-        );
-        if (res.data?.post) {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts/${postId}`);
+        
+        if(res.status == 200) {
           setPost(res.data.post);
+
+          if(isLoggedIn){
+            const isBookmarked = await checkBookmark(postId, token);
+            setSaved(isBookmarked);
+          }
+
         } else {
           throw new Error("Post not found.");
         }
@@ -74,32 +88,27 @@ const Answer = ({ postId }) => {
     router.back();
   };
 
-  const handleSave = () => {
-    setSaved(!saved);
-  }
+  const handleSave = async () => {
+    if(!isLoggedIn){
+      return;
+    }
+    
+    const token = localStorage.getItem("imaanToken");
 
-  // const handleShare = async () => {
-  //   if (navigator.share) {
-  //     try {
-  //       await navigator.share({
-  //         title: post.title,
-  //         text: post.question,
-  //         url: window.location.href, // current page URL
-  //       });
-  //       console.log('Post shared successfully!');
-  //     } catch (error) {
-  //       console.error('Error sharing:', error);
-  //     }
-  //   } else {
-  //     // Fallback: Copy link to clipboard
-  //     try {
-  //       await navigator.clipboard.writeText(window.location.href);
-  //       alert('Link copied to clipboard!');
-  //     } catch (error) {
-  //       console.error('Could not copy link:', error);
-  //     }
-  //   }
-  // };
+    let endpoint = saved ? "unbookmark" : "bookmark";
+
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/posts/${endpoint}/${postId}`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+  
+      if (res.status === 200) {
+        setSaved(!saved);
+      }
+    } catch (error) {
+      console.error("Bookmark toggle failed:", error.message);
+    }
+  }
 
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
@@ -215,11 +224,6 @@ const Answer = ({ postId }) => {
               </IconButton>
             </Tooltip>
 
-            {/* <Tooltip title="Share post">
-              <IconButton size="medium" onClick={handleShare}>
-                <IosShareIcon fontSize="medium" />
-              </IconButton>
-            </Tooltip> */}
           </Stack>
         </Box>
       </Box>
