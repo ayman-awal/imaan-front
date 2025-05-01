@@ -17,9 +17,9 @@ function PostCard({ title, question, onClick }) {
         {title.length > 85 ? <>{title.substr(0, 85)} ...</> : <>{title}</>}
       </h3>
       <p className="post-card-question">
-        {question.length > 185 ? (
+        {question.length > 180 ? (
           <>
-            {question.substr(0, 185)}
+            {question.substr(0, 180)}
             <Link
               component="button"
               sx={{

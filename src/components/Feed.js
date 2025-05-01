@@ -59,7 +59,7 @@ const Feed = () => {
   return (
     <div className="container">
       <div className="textbox" onClick={handleOpen}>
-        <p style={{ fontSize: "18px" }}>Write your question...</p>
+        <p style={{ fontSize: "18px" }}>Ask a question anonymously...</p>
       </div>
       {loading ? (
         <div>

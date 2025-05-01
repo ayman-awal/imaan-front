@@ -128,11 +128,29 @@ function ReviewQuestion({ postId }) {
     );
   }
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
-      <IconButton onClick={() => router.back()} sx={{ mb: 2 }}>
-        <ArrowBackIcon />
-      </IconButton>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <IconButton onClick={handleBack} sx={{ marginRight: 2 }}>
+          <ArrowBackIcon />
+        </IconButton>
+
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: 700,
+            color: "#1a1a1a",
+            lineHeight: 1.4,
+          }}
+        >
+          {post.title}
+        </Typography>
+      </Box>
 
       <Box
         sx={{
@@ -141,23 +159,10 @@ function ReviewQuestion({ postId }) {
           boxShadow: "0 12px 30px rgba(0,0,0,0.05)",
           borderRadius: "20px",
           px: { xs: 4, md: 6 },
-          py: { xs: 5, md: 7 },
+          py: { xs: 5, md: 5 },
           backdropFilter: "blur(8px)",
         }}
       >
-        <Typography
-          variant="h4"
-          component="h1"
-          sx={{
-            fontWeight: 700,
-            mb: 4,
-            lineHeight: 1.4,
-            color: "#1a1a1a",
-          }}
-        >
-          {post.title}
-        </Typography>
-
         <Box sx={{ mb: 5 }}>
           <Typography
             variant="subtitle2"
@@ -245,7 +250,14 @@ function ReviewQuestion({ postId }) {
               Submit
             </Button>
           </Box>
-          <Typography variant="caption" gutterBottom sx={{ display: 'block' }} mt={1}>Save answer as draft before submitting...</Typography>
+          <Typography
+            variant="caption"
+            gutterBottom
+            sx={{ display: "block" }}
+            mt={1}
+          >
+            Save answer as draft before submitting...
+          </Typography>
         </Box>
       </Box>
 

@@ -52,11 +52,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setSnackbar({
-      open: true,
-      message: "Logged out successfully",
-      severity: "success",
-    });
     localStorage.removeItem("imaanToken");
     setUser(null);
     localStorage.removeItem("isAdmin");

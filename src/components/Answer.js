@@ -9,14 +9,19 @@ import {
   Alert,
   IconButton,
   Tooltip,
+  Stack,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+// import IosShareIcon from "@mui/icons-material/IosShare";
 
 const Answer = ({ postId }) => {
   const router = useRouter();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [saved, setSaved] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -69,9 +74,36 @@ const Answer = ({ postId }) => {
     router.back();
   };
 
+  const handleSave = () => {
+    setSaved(!saved);
+  }
+
+  // const handleShare = async () => {
+  //   if (navigator.share) {
+  //     try {
+  //       await navigator.share({
+  //         title: post.title,
+  //         text: post.question,
+  //         url: window.location.href, // current page URL
+  //       });
+  //       console.log('Post shared successfully!');
+  //     } catch (error) {
+  //       console.error('Error sharing:', error);
+  //     }
+  //   } else {
+  //     // Fallback: Copy link to clipboard
+  //     try {
+  //       await navigator.clipboard.writeText(window.location.href);
+  //       alert('Link copied to clipboard!');
+  //     } catch (error) {
+  //       console.error('Could not copy link:', error);
+  //     }
+  //   }
+  // };
+
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <IconButton onClick={handleBack} sx={{ marginRight: 2 }}>
           <ArrowBackIcon />
         </IconButton>
@@ -148,11 +180,6 @@ const Answer = ({ postId }) => {
             >
               Answer
             </Typography>
-            <Tooltip title="Copy Answer">
-              <IconButton onClick={handleCopy} size="small">
-                <ContentCopyIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
           </Box>
 
           <Box
@@ -164,12 +191,36 @@ const Answer = ({ postId }) => {
               py: 2.5,
               fontSize: "1.1rem",
               lineHeight: 1.7,
-              color: "#1e4620",
+              color: "#666",
               whiteSpace: "pre-line",
             }}
           >
             {post.answer || "No answer yet."}
           </Box>
+
+          <Stack direction="row" spacing={1} justifyContent="flex-end" mt={2}>
+            <Tooltip title="Copy Answer">
+              <IconButton onClick={handleCopy} size="small">
+                <ContentCopyIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title={saved ? "Unsave post" : "Save post"}>
+              <IconButton size="medium" onClick={handleSave}>
+                {saved ? (
+                  <BookmarkIcon fontSize="medium" />
+                ) : (
+                  <BookmarkBorderIcon fontSize="medium" />
+                )}
+              </IconButton>
+            </Tooltip>
+
+            {/* <Tooltip title="Share post">
+              <IconButton size="medium" onClick={handleShare}>
+                <IosShareIcon fontSize="medium" />
+              </IconButton>
+            </Tooltip> */}
+          </Stack>
         </Box>
       </Box>
     </Container>

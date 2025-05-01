@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import GutterlessList from "../common/GutterlessList";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Typography, Box } from "@mui/material";
 import PendingQuestionsPanel from "./PendingQuestionsPanel";
 
 function Dashboard() {
@@ -31,17 +31,35 @@ function Dashboard() {
     fetchUnpublishedQuestions();
   }, []);
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <div className="profile-container">
-      <IconButton onClick={() => router.back()} sx={{ mb: 2 }}>
-        <ArrowBackIcon />
-      </IconButton>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <IconButton onClick={handleBack} sx={{ marginRight: 2 }}>
+          <ArrowBackIcon />
+        </IconButton>
+
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: 700,
+            color: "#1a1a1a",
+            lineHeight: 1.4,
+          }}
+        >
+          Dashboard
+        </Typography>
+      </Box>
       <div style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
         <div style={{ flex: 3 }}>
           <GutterlessList
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
-            tabs={["Pending questions", "Articles", "List of users"]}
+            tabs={["Pending questions", "Articles", "Users"]}
           />
         </div>
         <div style={{ flex: 7 }}>
@@ -50,11 +68,11 @@ function Dashboard() {
           )}
 
           {selectedTab === "Articles" && (
-            <Typography variant="h6">Articles</Typography>
+            <Typography variant="h6">Articles coming soon...</Typography>
           )}
 
-          {selectedTab === "List of users" && (
-            <Typography variant="h6">Users</Typography>
+          {selectedTab === "Users" && (
+            <Typography variant="h6">Users coming soon...</Typography>
           )}
         </div>
       </div>

@@ -4,7 +4,6 @@ import Link from "@mui/material/Link";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { GoogleIcon } from "../CustomIcons";
@@ -114,7 +113,6 @@ function LoginModal({ openModal, closeModal }) {
 
           <Divider sx={{ marginTop: 2, marginBottom: 2 }}>or</Divider>
 
-          <Grid container spacing={1}>
             <Button
               fullWidth
               variant="outlined"
@@ -123,7 +121,6 @@ function LoginModal({ openModal, closeModal }) {
             >
               Sign in with Google
             </Button>
-          </Grid>
 
           <Typography sx={{ textAlign: "center" }}>
             Don&apos;t have an account?{" "}
