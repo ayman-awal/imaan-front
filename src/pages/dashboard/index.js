@@ -4,7 +4,7 @@ import Dashboard from "@/components/dashboard/Dashboard";
 
 function DashboardPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute checkAdmin={true}>
       <Dashboard />
     </ProtectedRoute>
   );

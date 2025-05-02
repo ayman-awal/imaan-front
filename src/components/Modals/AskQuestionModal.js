@@ -59,6 +59,10 @@ function AskQuestionModal({ open, handleClose, setSnackbar, token }) {
       setQuestion(value);
       setWordCount(words.length);
     }
+
+    if(question == ""){
+      setWordCount("");
+    }
   };
 
   // const wordCount = question.trim() === "" ? 0 : question.trim().split(/\s+/).length;

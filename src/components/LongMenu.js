@@ -8,8 +8,8 @@ import LockOutlineIcon from "@mui/icons-material/LockOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const options = [
-  { icon: <LockOutlineIcon />, text: "Unpublish" },
-  { icon: <DeleteOutlineIcon />, text: "Delete" },
+  { id: 1, icon: <LockOutlineIcon />, text: "Unpublish" },
+  { id: 2, icon: <DeleteOutlineIcon />, text: "Delete" },
 ];
 
 const ITEM_HEIGHT = 48;
@@ -18,7 +18,7 @@ export default function LongMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleMenuClick = (event) => {
     event.stopPropagation();
     if (anchorEl && anchorEl === event.currentTarget) {
       setAnchorEl(null);
@@ -32,6 +32,12 @@ export default function LongMenu() {
     setAnchorEl(null);
   };
 
+  const handleOptionClick = (event) => {
+    event.stopPropagation();
+    console.log(event.target.key);
+    handleClose();
+  }
+
   return (
     <div>
       <IconButton
@@ -40,7 +46,7 @@ export default function LongMenu() {
         aria-controls={open ? "long-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={handleMenuClick}
       >
         <MoreHorizIcon />
       </IconButton>
@@ -63,13 +69,9 @@ export default function LongMenu() {
       >
         {options.map((option) => (
           <MenuItem
-            key={option}
+            key={option.id}
             selected={option === "Pyxis"}
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log(option);
-              handleClose();
-            }}
+            onClick={handleOptionClick}
           >
             <ListItemIcon>
               {option.icon}
