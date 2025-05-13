@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { Box, Typography, Container } from "@mui/material";
+import NoDataMessage from "./common/NoDataMessage";
 import SnackbarComponent from "./common/SnackbarComponent";
 import PostSkeleton from "./skeleton/PostSkeleton";
 import AskQuestionModal from "./modals/AskQuestionModal";
@@ -57,18 +59,48 @@ const Feed = () => {
   };
 
   return (
-    <div className="container">
-      <div className="textbox" onClick={handleOpen}>
-        <p style={{ fontSize: "18px" }}>Ask a question anonymously...</p>
-      </div>
+    <Container maxWidth="md" sx={{ padding: "10px" }}>
+      <Box
+        onClick={handleOpen}
+        sx={{
+          display: "block",
+          padding: "16px 20px",
+          backgroundColor: "#fff",
+          border: "1px solid #ddd",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+          fontSize: "16px",
+          color: "#666",
+          cursor: "pointer",
+          userSelect: "none",
+          transition: "all 0.2s ease-in-out",
+          marginY: "30px",
+          "&:hover": {
+            borderColor: "#aaa",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+            backgroundColor: "#fefefe",
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "18px",
+            margin: 0,
+            color: "#444",
+            fontWeight: 500,
+          }}
+        >
+          Ask a question anonymously...
+        </Typography>
+      </Box>
       {loading ? (
-        <div>
+        <Container disableGutters>
           {[...Array(5)].map((_, i) => (
             <PostSkeleton key={i} />
           ))}
-        </div>
+        </Container>
       ) : posts.length === 0 ? (
-        <div className="no-posts">No posts available</div>
+        <NoDataMessage message="No posts available" />
       ) : (
         posts.map((post) => (
           <PostCard
@@ -86,14 +118,14 @@ const Feed = () => {
         token={token}
         setSnackbar={setSnackbar}
       />
-      
+
       <SnackbarComponent
         message={snackbar.message}
         severity={snackbar.severity}
         open={snackbar.open}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
-    </div>
+    </Container>
   );
 };
 

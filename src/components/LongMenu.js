@@ -1,6 +1,7 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
+import Container from "@mui/material/Menu";
+import Menu from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -39,7 +40,7 @@ export default function LongMenu() {
   }
 
   return (
-    <div>
+    <Container>
       <IconButton
         aria-label="more"
         id="long-button"
@@ -80,6 +81,6 @@ export default function LongMenu() {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </Container>
   );
 }
