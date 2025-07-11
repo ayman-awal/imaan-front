@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
       message: "Logged in successfully",
       severity: "success",
     });
+    router.push("/");
   };
 
   const logout = () => {

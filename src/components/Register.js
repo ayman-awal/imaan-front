@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 
 const Register = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [verifyEmail, setVerifyEmail] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -29,7 +31,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, dateOfBirth, gender } = formData;
+    const { firstName, lastName, email, password, dateOfBirth, gender } =
+      formData;
     console.log(formData);
     try {
       const response = await axios.post(
@@ -43,7 +46,9 @@ const Register = () => {
           gender,
         }
       );
-      console.log(response);
+      if (response.status == 201) {
+        setFormSubmitted(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -142,6 +147,32 @@ const Register = () => {
           </Button>
         </form>
       </Box>
+      {formSubmitted && (
+        <Box
+          mt={3}
+          p={2}
+          borderRadius={2}
+          bgcolor="#e0f7fa"
+          border="1px solid #4dd0e1"
+          textAlign="center"
+        >
+          <Typography variant="body1" gutterBottom>
+            ✅ A verification email has been sent to{" "}
+            <strong>{formData.email}</strong>.
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Please check your inbox and spam folder.
+          </Typography>
+          <Typography
+            variant="body2"
+            color="primary"
+            sx={{ mt: 1, cursor: "pointer", textDecoration: "underline" }}
+            onClick={() => setVerifyEmail(true)} // or trigger a resend logic
+          >
+            Didn’t receive the email? Click here to resend.
+          </Typography>
+        </Box>
+      )}
     </Container>
   );
 };

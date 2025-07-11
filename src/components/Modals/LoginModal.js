@@ -17,6 +17,7 @@ function LoginModal({ openModal, closeModal }) {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
+    console.log("ENTERED");
     e.preventDefault();
 
     try {
@@ -28,6 +29,8 @@ function LoginModal({ openModal, closeModal }) {
         }
       );
 
+      console.log(response);
+
       const token = response.data.token;
 
       if (token) {
@@ -37,6 +40,7 @@ function LoginModal({ openModal, closeModal }) {
         logout();
       }
     } catch (error) {
+      console.log("ERROR");
       console.error(error);
       setError("Invalid email or password.");
     }
@@ -125,8 +129,9 @@ function LoginModal({ openModal, closeModal }) {
           <Typography sx={{ textAlign: "center" }}>
             Don&apos;t have an account?{" "}
             <Link
+              href="/register"
               variant="body2"
-              component="button"
+              // component="button"
               type="button"
               sx={{ alignSelf: "center" }}
             >
