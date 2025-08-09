@@ -1,20 +1,3 @@
-// import React from "react";
-// import Feed from "@/components/Feed";
-// import ProfileSidebar from "@/components/Sidebar";
-
-// const HomePage = () => {
-//   return (
-//     <div>
-//       <div className="container">
-//         <ProfileSidebar />
-//         <Feed />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default HomePage;
-
 import React from "react";
 import Feed from "@/components/Feed";
 import ProfileSidebar from "@/components/Sidebar";
@@ -29,16 +12,28 @@ const HomePage = () => {
         margin: "0 auto",
         padding: 2,
         gap: 3,
+        flexWrap: "wrap",
       }}
     >
-      <Box sx={{ width: "20%" }}>
+      <Box
+        sx={{
+          flexBasis: { xs: "100%", sm: "30%", md: "20%" },
+          maxWidth: { xs: "100%", sm: "30%", md: "20%" },
+          mb: { xs: 3, md: 0 },
+          display: { xs: "none", sm: "block" }
+        }}
+      >
         <ProfileSidebar />
       </Box>
 
-      <Box sx={{ width: "60%" }}>
+      <Box
+        sx={{
+          flexBasis: { xs: "100%", sm: "65%", md: "60%" },
+          maxWidth: { xs: "100%", sm: "65%", md: "60%" },
+        }}
+      >
         <Feed />
       </Box>
-
     </Box>
   );
 };

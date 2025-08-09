@@ -66,7 +66,7 @@ const Feed = () => {
           display: "block",
           padding: "16px 20px",
           backgroundColor: "#fff",
-          border: "1px solid #ddd",
+          border: "1.5px solid #ddd",
           borderRadius: "8px",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
           fontSize: "16px",
