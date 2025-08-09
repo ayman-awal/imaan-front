@@ -24,7 +24,7 @@ function Dashboard() {
         }
       );
 
-      if (res.status == 200) {
+      if (res.status === 200) {
         setPendingQuestions(res.data.posts);
       }
     };
@@ -36,9 +36,9 @@ function Dashboard() {
   };
 
   return (
-    <div className="profile-container">
+    <Box className="profile-container" sx={{ p: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <IconButton onClick={handleBack} sx={{ marginRight: 2 }}>
+        <IconButton onClick={handleBack} sx={{ mr: 2 }}>
           <ArrowBackIcon />
         </IconButton>
 
@@ -54,15 +54,23 @@ function Dashboard() {
           Dashboard
         </Typography>
       </Box>
-      <div style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
-        <div style={{ flex: 3 }}>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 3,
+        }}
+      >
+        <Box sx={{ flex: 3 }}>
           <GutterlessList
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
             tabs={["Pending questions", "Articles", "Users"]}
           />
-        </div>
-        <div style={{ flex: 7 }}>
+        </Box>
+
+        <Box sx={{ flex: 7 }}>
           {selectedTab === "Pending questions" && (
             <PendingQuestionsPanel pendingQuestions={pendingQuestions} />
           )}
@@ -74,9 +82,9 @@ function Dashboard() {
           {selectedTab === "Users" && (
             <Typography variant="h6">Users coming soon...</Typography>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

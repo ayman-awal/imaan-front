@@ -34,8 +34,7 @@ function Profile() {
           }
         );
 
-        if (response.status == 200) {
-          console.log(response.data);
+        if (response.status === 200) {
           setAnsweredQuestions(response.data.posts.answered);
           setUnansweredQuestions(response.data.posts.unanswered);
           setBookmarks(response.data.posts.bookmarks);
@@ -50,9 +49,9 @@ function Profile() {
   }, []);
 
   return (
-    <div className="profile-container">
+    <Box className="profile-container" sx={{ p: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <IconButton onClick={handleBack} sx={{ marginRight: 2 }}>
+        <IconButton onClick={handleBack} sx={{ mr: 2 }}>
           <ArrowBackIcon />
         </IconButton>
 
@@ -69,16 +68,22 @@ function Profile() {
         </Typography>
       </Box>
 
-      <div style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
-        <div style={{ flex: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 3,
+        }}
+      >
+        <Box sx={{ flex: 3 }}>
           <GutterlessList
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
             tabs={["My Questions", "Bookmarks", "Account Settings"]}
           />
-        </div>
+        </Box>
 
-        <div style={{ flex: 7 }}>
+        <Box sx={{ flex: 7 }}>
           {selectedTab === "My Questions" && (
             <QuestionsPanel
               loading={loading}
@@ -87,16 +92,12 @@ function Profile() {
             />
           )}
 
-          {selectedTab === "Bookmarks" && (
-            <BookmarkPanel bookmarks={bookmarks} />
-          )}
+          {selectedTab === "Bookmarks" && <BookmarkPanel bookmarks={bookmarks} />}
 
-          {selectedTab === "Account Settings" && (
-            <SettingsPanel />
-          )}
-        </div>
-      </div>
-    </div>
+          {selectedTab === "Account Settings" && <SettingsPanel />}
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
