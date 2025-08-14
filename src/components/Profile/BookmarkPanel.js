@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import PostCard from "../PostCard";
-import { Card } from "@mui/material";
+import { Box } from "@mui/material";
 
 function BookmarkPanel({ bookmarks }) {
   const router = useRouter();
@@ -11,8 +11,7 @@ function BookmarkPanel({ bookmarks }) {
   };
 
   return (
-    <div>
-      {/* <Card sx={{ p: 3, maxWidth: "100%", mx: "auto" }}> */}
+    <Box>
       {bookmarks.map((bookmark) => (
         <PostCard
           key={bookmark.id}
@@ -21,8 +20,7 @@ function BookmarkPanel({ bookmarks }) {
           onClick={() => handleClick(bookmark.id)}
         />
       ))}
-    </div>
-    // {/* </Card> */}
+    </Box>
   );
 }
 

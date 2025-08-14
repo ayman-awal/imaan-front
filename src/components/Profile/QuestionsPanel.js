@@ -3,13 +3,21 @@ import { useRouter } from "next/router";
 import PostCard from "../PostCard";
 import TabNavigation from "../common/TabNavigation";
 import PostSkeleton from "../skeleton/PostSkeleton";
+import { Box, Typography } from "@mui/material";
 
 function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
   const router = useRouter();
   const [value, setValue] = useState(0);
 
+  const noPostsTextStyle = {
+    color: "#555",
+    fontSize: "22px",
+    fontWeight: 700,
+  };
+
+
   return (
-    <div>
+    <Box>
       <TabNavigation
         value={value}
         setValue={setValue}
@@ -17,11 +25,11 @@ function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
       />
 
       {loading ? (
-        <div>
+        <Box>
           {[...Array(5)].map((_, i) => (
             <PostSkeleton key={i} />
           ))}
-        </div>
+        </Box>
       ) : value === 0 ? (
         answeredQuestions.length > 0 ? (
           answeredQuestions.map((q, i) => (
@@ -33,7 +41,11 @@ function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
             />
           ))
         ) : (
-          <div className="no-posts">No answered questions</div>
+          <Box sx={{ textAlign: "center", mt: 6 }}>
+            <Typography sx={noPostsTextStyle}>
+              No answered questions
+            </Typography>
+          </Box>
         )
       ) : value === 1 ? (
         unansweredQuestions.length > 0 ? (
@@ -46,10 +58,14 @@ function QuestionsPanel({ loading, answeredQuestions, unansweredQuestions }) {
             />
           ))
         ) : (
-          <div className="no-posts">No unanswered questions</div>
+          <Box sx={{ textAlign: "center", mt: 6 }}>
+            <Typography sx={noPostsTextStyle}>
+              No answered questions
+            </Typography>
+          </Box>
         )
       ) : null}
-    </div>
+    </Box>
   );
 }
 
