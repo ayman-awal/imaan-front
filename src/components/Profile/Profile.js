@@ -71,11 +71,13 @@ function Profile() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          gap: 3,
+          flexDirection: { xs: "column", md: "row" },
+          gap: { xs: 2, md: 3 },
         }}
       >
-        <Box sx={{ flex: 3 }}>
+        <Box sx={{ 
+          flex: 3
+        }}>
           <GutterlessList
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}

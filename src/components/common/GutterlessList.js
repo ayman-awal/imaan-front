@@ -9,7 +9,7 @@ export default function GutterlessList({ selectedTab, setSelectedTab, tabs }) {
     <List
       sx={{
         width: "100%",
-        maxWidth: 360,
+        // maxWidth: 360,
         bgcolor: "background.paper",
         borderRadius: "5px",
       }}
